@@ -17,3 +17,9 @@ Auth::routes();
 Route::post('/messages','MessageController@create')->middleware('auth');
 
 Route::get('user/{user_id}', 'UserController@get');
+
+Route::get('user/{user_id}/friends','UserController@friends' );
+Route::post('user/{user_id}/friends','UserController@addFriend' );
+Route::delete('user/{user_id}/friends','UserController@deleteFriend' );
+
+Route::get('user/{user_id}/update','UserController@updateUser' )->middleware('auth');

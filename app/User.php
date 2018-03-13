@@ -30,4 +30,11 @@ class User extends Authenticatable
     public function messages(){
         return $this->hasMany(Message::class)->latest();
     }
+
+    public function isFriend(User $user){
+        return $this->friends->contains($user);
+    }
+    public function friends(){
+        return $this->belongsToMany(User::class, 'friends',  'user_id', 'friend_id');
+    }
 }
