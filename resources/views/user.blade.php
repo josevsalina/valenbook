@@ -50,17 +50,17 @@
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
-                  @endif
-              @forelse($user->messages as $message)
-                    <div class="card mt-1">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="/user/{{$message->user_id}}">{{$user->nombre}}</a></h5>
-                            <p class="card-text">{{$message['content']}}</p>
-                        </div>
-                    </div>
-                @empty
-                    <h3 class="mx-auto">No hay publicaciones que visualizar</h3>
-                @endforelse
+            @endif
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
+            @forelse($user->messages as $message)
+              @include('layouts.message')    
+            @empty
+                <h3 class="mx-auto">No hay publicaciones que visualizar</h3>
+            @endforelse
         </div>
     </div>
 </div>

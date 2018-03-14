@@ -49,7 +49,7 @@
                                         Perfil
                                     </a>
 
-                                    <form id="perfil-form" action="/user/{{Auth::id()}}" method="GET" style="display: none;">
+                                    <form id="perfil-form" action="/user/{{Auth::user()->id}}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                     

@@ -21,4 +21,9 @@ class MessageController extends Controller
 
     	return redirect('/');
     }
+
+    public function delete($message_id){
+        Message::destroy($message_id);
+        return redirect()->back()->with('message', 'Mensaje borrado exitosamente');
+    }
 }

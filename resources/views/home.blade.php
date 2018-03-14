@@ -16,6 +16,7 @@
             <div class="col"> <button type="submit" class="btn btn-primary">Publicar</button></div>
         </form>
 
+
     </div>
 
 
@@ -26,14 +27,13 @@
                     {{ session('status') }}
                 </div>
             @endif
-
-            @forelse($messages as $message)
-                <div class="card mt-1">
-                    <div class="card-body">
-                        <h5 class="card-title"><a href="/user/{{$message->user_id}}">{{$message->user->nombre}}</a></h5>
-                        <p class="card-text">{{$message['content']}}</p>
-                    </div>
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
                 </div>
+            @endif
+            @forelse($messages as $message)
+                @include('layouts.message')
             @empty
                 <h3 class="mx-auto">No hay publicaciones que visualizar</h3>
             @endforelse
