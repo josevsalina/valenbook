@@ -43,25 +43,9 @@ class UserController extends Controller
     	return redirect()->back()->withSuccess('Usuario Eliminado');
     }
 
-    public function updateUser()
+    public function updateView()
     {
     	return view('user.update');
     }
 
-     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function update(array $data)
-    {
-         $this->validate($data, [
-            'nombre' => 'string|max:255',
-            'email' => 'string|email|max:255|unique:users',
-            'password' => 'string|min:1|confirmed',
-            'cedula' => 'integer|unique:users',
-        ]);
-         dd($data);
-    }
 }

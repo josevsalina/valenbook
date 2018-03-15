@@ -15,9 +15,9 @@ Route::get('/', 'HomeController@index')->middleware('auth');
 Auth::routes();
 
 Route::post('/messages','MessageController@create')->middleware('auth');
-Route::put('/messages/{message_id}','MessageController@update' )->middleware('auth');
+Route::get('/user/{user_id}/message/{message_id}','MessageController@updateView' )->middleware('auth');
 Route::delete('/messages/{message_id}','MessageController@delete' )->middleware('auth');
-
+Route::put('/messages/{message_id}', 'MessageController@update')->middleware('auth');
 
 Route::post('/user/{user_id}', 'UserController@get');
 Route::get('/user/{user_id}', 'UserController@get');
@@ -26,4 +26,5 @@ Route::get('/user/{user_id}/friends','UserController@friends' );
 Route::post('/user/{user_id}/friends','UserController@addFriend' );
 Route::delete('/user/{user_id}/friends','UserController@deleteFriend' );
 
-Route::get('/user/{user_id}/update','UserController@updateUser' )->middleware('auth');
+Route::put('/user/{user_id}/update','Auth\RegisterController@update')->middleware('auth');
+Route::get('/user/{user_id}/update','UserController@updateView')->middleware('auth');

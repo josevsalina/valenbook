@@ -1,4 +1,3 @@
-
 <div class="card mt-1 mb-2">
 	  <div class="card-header bg-dark ">
     	<div class="d-flex justify-content-between bd-highlight">
@@ -10,11 +9,8 @@
 	     @if (Auth::check() && Auth::user()->id == $message->user_id )
 	    <ul class="nav nav-pills card-header-pills pull-right">
 			<li class="nav-item">
-				<form id="editar-msj" action="/user/{$message->user_id}/message/{$message->id}" method="post" />
-	                @csrf
-	                <input type="hidden" name="_method" value="PUT">
-					<a class="nav-link text-primary	"  href="#">Editar</a>	    		
-				</form>
+					<a class="nav-link text-primary	"  href="/user/{{$message->user_id}}/message/{{$message->id}}">Editar</a>	    		
+			
 		      	
 		    </li>
 	        <li class="nav-item active">

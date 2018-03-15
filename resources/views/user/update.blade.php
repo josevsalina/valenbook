@@ -6,15 +6,20 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Actualizar Campos</div>
-
+                @if(session()->has('error'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('error') }}
+                    </div>
+                @endif
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="/user/{{Auth::user()->id}}/update">
                         @csrf
+                        <input type="hidden" name="_method" value="PUT">
                          <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">Correo Electrónico</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ Auth::user()->email }}" required autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback">
@@ -27,7 +32,7 @@
                             <label for="cedula" class="col-md-4 col-form-label text-md-right">Cédula de Identidad</label>
 
                             <div class="col-md-6">
-                                <input id="cedula" type="text" class="form-control{{ $errors->has('cedula') ? ' is-invalid' : '' }}" name="cedula" value="{{ old('cedula') }}" required>
+                                <input id="cedula" type="text" class="form-control{{ $errors->has('cedula') ? ' is-invalid' : '' }}" name="cedula" value="{{ Auth::user()->cedula }}" required>
 
                                 @if ($errors->has('cedula'))
                                     <span class="invalid-feedback">
@@ -40,7 +45,7 @@
                             <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombre</label>
 
                             <div class="col-md-6">
-                                <input id="nombre" type="text" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{ old('nombre') }}" required >
+                                <input id="nombre" type="text" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{ Auth::user()->nombre }}" required >
 
                                 @if ($errors->has('nombre'))
                                     <span class="invalid-feedback">

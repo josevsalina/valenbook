@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -37,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest')->except('update');
     }
 
     /**
@@ -55,7 +56,35 @@ class RegisterController extends Controller
             'cedula' => 'required|integer|unique:users',
         ]);
     }
+     /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validatorRequest(Request $data)
+    {
+        return $this->validate($data, [
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:1|confirmed',
+            'cedula' => 'required|integer',
+        ]);
+    }
+  /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validatorRequest2(Request $data)
+    {
+        return $this->validate($data, [
+            'email' => 'unique:users',
+            'cedula' => 'unique:users',
+        ]);
 
+    }
     /**
      * Create a new user instance after a valid registration.
      *
@@ -70,5 +99,23 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'cedula' => $data['cedula'],
         ]);
+    }
+
+
+    protected function update($id, Request $data){
+        $user = User::find($id);
+        $this->validatorRequest($data);
+        try{
+            $user->nombre = $data['nombre'];
+            $user->email = $data['email'];
+            $user->password = Hash::make($data['password']);
+            $user->cedula = $data['cedula'];    
+            $user->save();
+        }catch(\Exception $e){
+            // do task when error
+            
+            return redirect()->back()->with('error','Error al actualizar sus campos');
+        }
+        return redirect('/user/'.$id)->with('message','Usuario Actualizado Exitosamente');
     }
 }
